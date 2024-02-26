@@ -4,12 +4,26 @@ import edu.iu.habahram.remotecontroller.model.DeviceData;
 import edu.iu.habahram.remotecontroller.model.Light;
 import edu.iu.habahram.remotecontroller.model.RemoteControl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RemoteLoader implements  IRemoteLoader{
+public  class RemoteLoader implements IRemoteLoader{
+
     HashMap<Integer, RemoteControl> remoteControls = new HashMap<>();
+
+    private volatile static RemoteLoader uniqueInstance;
+
+    public static RemoteLoader createInstance() {
+        if (uniqueInstance == null) {
+            synchronized (RemoteLoader.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new RemoteLoader();
+                }
+            }
+        }
+        return uniqueInstance;
+    }
+
     @Override
     public void setup(int id, List<DeviceData> devices) {
         RemoteControl remoteControl = new RemoteControl(devices.size());
@@ -26,7 +40,7 @@ public class RemoteLoader implements  IRemoteLoader{
     }
 
     @Override
-    public String onButtonWasPushed(int id, int slot) {
+    public String  onButtonWasPushed(int id, int slot) {
          return remoteControls.get(id).onButtonWasPushed(slot);
     }
 
