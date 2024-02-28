@@ -2,6 +2,8 @@ package edu.iu.habahram.remotecontroller.model;
 
 import edu.iu.habahram.remotecontroller.repository.RemoteLoader;
 
+import java.rmi.Remote;
+
 public class Stereo {
 
     String location = "";
@@ -12,7 +14,10 @@ public class Stereo {
     }
 
     public String on() {
-        return location + " stereo is on";
+        String result = location + " stereo is on";
+        result += setCd();
+        return result;
+
     }
 
     public String off() {
@@ -33,8 +38,8 @@ public class Stereo {
         return "radio is set";
 
     }
-
     public String setVolume(int volume){
+        this.volume = volume;
         return "Volume is set to " + volume;
     }
 
