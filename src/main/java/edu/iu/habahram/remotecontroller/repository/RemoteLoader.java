@@ -10,19 +10,6 @@ import java.util.List;
 public  class RemoteLoader implements IRemoteLoader{
 
     HashMap<Integer, RemoteControl> remoteControls = new HashMap<>();
-
-    private volatile static RemoteLoader uniqueInstance;
-
-    public static RemoteLoader createInstance() {
-        if (uniqueInstance == null) {
-            synchronized (RemoteLoader.class) {
-                if (uniqueInstance == null) {
-                    uniqueInstance = new RemoteLoader();
-                }
-            }
-        }
-        return uniqueInstance;
-    }
     @Override
     public void setup(int id, List<DeviceData> devices) {
         RemoteControl remoteControl = new RemoteControl(devices.size());
@@ -37,12 +24,15 @@ public  class RemoteLoader implements IRemoteLoader{
         remoteControls.put(id, remoteControl);
         System.out.println(remoteControl.toString());
     }
+
     @Override
-    public String  onButtonWasPushed(int id, int slot) {
-         return remoteControls.get(id).onButtonWasPushed(slot);
+    public String onButtonWasPushed(int id, int slot) {
+        return remoteControls.get(id).onButtonWasPushed(slot);
     }
+
     @Override
     public String offButtonWasPushed(int id, int slot) {
         return remoteControls.get(id).offButtonWasPushed(slot);
+
     }
 }

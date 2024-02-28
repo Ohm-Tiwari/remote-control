@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/remotes")
 public class RemoteController {
 
-    IRemoteLoader remoteLoader = (IRemoteLoader) new RemoteLoader().createInstance();
+    IRemoteLoader remoteLoader = new RemoteLoader();
 
     @PostMapping("/{id}")
     public boolean setup(@PathVariable int id, @RequestBody List<DeviceData> devices) {
